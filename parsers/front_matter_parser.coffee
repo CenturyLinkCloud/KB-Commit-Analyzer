@@ -21,7 +21,14 @@ FrontMatterParser =
     process.stdout.write "."
     return if fileIsIgnored(file.name)
 
-    output = frontMatter.parse fs.readFileSync(file.fullPath, 'utf-8')
+    fileText = fs.readFileSync(file.fullPath, 'utf-8')
+    try
+      frontMatter.parse fileText
+    catch err
+      console.log err.stack
+      return console.log "This occurred in #{file.fullPath}"
+
+    output = frontMatter.parse fileText
     fileAttrs = _.keys output.attributes
 
     attrDiff    = _.difference requiredAttrs, fileAttrs
