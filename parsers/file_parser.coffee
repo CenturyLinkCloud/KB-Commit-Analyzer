@@ -13,13 +13,13 @@ App =
   failures: []
 
 RegExplorer =
-  # not beginning with http or mailto or a ? (? bc `marked` parses some regex in their code as links…)
+  # not beginning with any likely URI schemes or a ? (? bc `marked` parses some regex in their code as links…)
   # not beginning with "// (markdown shortcut link)
   # capture below
   #  any chars
   #  capture the anchor link (which is optional)
   #  capture the final double quote
-  filePath: /href="(?!\?|http|mailto|ftp)(?!\/\/)((?!#)(.*?)((#.*?)?)("))/
+  filePath: /href="(?!\?|http|mailto|ftp|sftp|git|smtp|file)(?!\/\/)((?!#)(.*?)((#.*?)?)("))/
 
 FileParser =
   imagePaths: []
