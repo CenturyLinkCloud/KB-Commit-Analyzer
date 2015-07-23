@@ -19,7 +19,7 @@ RegExplorer =
   #  any chars
   #  capture the anchor link (which is optional)
   #  capture the final double quote
-  filePath: /href="(?!\?|http|mailto)(?!\/\/)((?!#)(.*?)((#.*?)?)("))/
+  filePath: /href="(?!\?|http|mailto|ftp)(?!\/\/)((?!#)(.*?)((#.*?)?)("))/
 
 FileParser =
   imagePaths: []
