@@ -18,12 +18,15 @@ App =
   failures: []
 
 RegExplorer =
-  link: /(https?:\/\/?)([\da-z\.-]+\.[a-z\.]{2,6}[\/\w\-].*?)"/
+  link: /(https?:\/\/?)([\da-z\.-]+\.[a-z\.]{1,6}[\/\w\-].*?)"/
+
+LinkCacher =
+  links: []
 
 LinkParser =
   linkMatches: []
   parse: (file, failed) ->
-    console.log "Parsing links...\n\n\n"
+    process.stdout.write "."
 
     output = fs.readFileSync file.fullPath, 'utf-8'
     markdown = marked(output).split("\n")
@@ -38,15 +41,21 @@ LinkParser =
   validateLinks: (file) ->
     _.each @linkMatches, (link) => @validateLink(link, file)
     failed = if App.failures.length then true else false
+    @linkMatches = []
     failed
 
   validateLink: (link, file) ->
+    if (_.indexOf LinkCacher.links, link) >= 0
+      return console.log "Link #{link} (referenced in #{file}) already parsed; see response earlier in file"
     try
       res = request(link)
       status = res.status
+      LinkCacher.links.push link
       @logError(link, null, status, file) if status >= ERROR_CODE_RANGE_START
     catch error
-      @logError(link, error.stack.slice(0, 100), null, file)
+      errorMsg = error.stack.slice(0, 100)
+      LinkCacher.links.push link
+      @logError(link, errorMsg, null, file)
 
   logError: (link, status, errorMsg, file) ->
     extraMsg = if status then "response #{status}." else "error '#{errorMsg}'."
