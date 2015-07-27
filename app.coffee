@@ -13,10 +13,11 @@ _            = require('underscore')
 # Parsers
 #
 
-frontMatterParser = require('./parsers/front_matter_parser')
-markdownParser    = require('./parsers/markdown_parser')
-fileParser        = require('./parsers/file_parser')
-linkParser        = require('./parsers/link_parser')
+frontMatterParser   = require('./parsers/front_matter_parser')
+markdownParser      = require('./parsers/markdown_parser')
+fileParser          = require('./parsers/file_parser')
+linkParser          = require('./parsers/link_parser')
+linkAttributeParser = require('./parsers/link_attribute_parser')
 
 F =
   failed: null
@@ -35,7 +36,7 @@ App =
     , (err, res) =>
       if F.failed then process.exit(1) else process.exit(0)
 
-  parsers: [frontMatterParser, markdownParser, fileParser]
+  parsers: [frontMatterParser, markdownParser, fileParser, linkAttributeParser]
   #parsers: [fileParser]
 
   # Uncomment for production files
