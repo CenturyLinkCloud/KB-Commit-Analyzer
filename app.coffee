@@ -40,7 +40,7 @@ App =
   #parsers: [fileParser]
 
   # Uncomment for production files
-  directoryFilters: ['!node_modules', '!Release Notes', '!lib']
+  directoryFilters: ['!node_modules', '!lib']
   fileFilters: '*.md'
 
   # Uncomment for test files
