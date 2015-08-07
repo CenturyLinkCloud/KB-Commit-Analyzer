@@ -13,13 +13,14 @@ App =
   failures: []
 
 RegExplorer =
-  # not beginning with any likely URI schemes or a ? (? bc `marked` parses some regex in their code as links…)
+  # starting with href or src
+  # not beginning the link URI with any likely URI schemes or a ? (? bc `marked` parses some regex in their code as links…)
   # not beginning with "// (markdown shortcut link)
   # capture below
   #  any chars
   #  capture the anchor link (which is optional)
   #  capture the final double quote
-  filePath: /href="(?!\?|http|mailto|ftp|sftp|git|smtp|file)(?!\/\/)((?!#)(.*?)((#.*?)?)("))/
+  filePath: /(href|src)="(?!\?|http|mailto|ftp|sftp|git|smtp|file)(?!\/\/)((?!#)(.*?)((#.*?)?)("))/
 
 FileParser =
   imagePaths: []
@@ -41,7 +42,7 @@ FileParser =
       line = line.replace(/&amp;/g, '&')
 
       filePathMatch = RegExplorer.filePath.exec(line)
-      @files.push filePathMatch[2] if filePathMatch
+      @files.push filePathMatch[3] if filePathMatch
 
     @checkFiles(@files, @currentPath, file.fullPath)
 
