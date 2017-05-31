@@ -48,9 +48,8 @@ const fs = require('fs'),
       output = fs.readFileSync(file.fullPath, 'utf-8');
       markdown = marked(output).split("\n");
       _.each(markdown, function(line) {
-        var filePathMatch;
         line = line.replace(/&amp;/g, '&');
-        filePathMatch = RegExplorer.filePath.exec(line);
+        const filePathMatch = RegExplorer.filePath.exec(line);
         if (filePathMatch) {
           FileParser.files.push(filePathMatch[3]);
         }
