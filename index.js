@@ -23,7 +23,7 @@ const readdirp = require('readdirp'),
   };
 
 function loadIgnored() {
-  var err, files;
+  let err, files;
   try {
     files = fs.readFileSync('../commit_analyzer_ignore.txt', 'utf-8');
     files = files.split('\n');
@@ -58,8 +58,7 @@ function analyze() {
         return;
       }
       return _.each(parsers, function(parser) {
-        var failed;
-        failed = F.failed;
+        const failed = F.failed;
         return F.failed = parser.parse(file, failed);
       });
     },
