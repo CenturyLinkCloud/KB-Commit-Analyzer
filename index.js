@@ -13,7 +13,7 @@ const readdirp = require('readdirp'),
     fileParser,
     linkAttributeParser
   ],
-  directoryFilters = ['!node_modules', '!lib'],
+  directoryFilters = ['!node_modules', '!lib', '!Archive'],
   fileFilters = '*.md',
   F = {
     failed: null
